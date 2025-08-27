@@ -3,15 +3,14 @@ package com.nopcommerce.utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
 
-public class ActionUtil {
+public class ElementAction {
     private final WebDriver driver;
     private WaitUtil wait;
 
-    public ActionUtil(WebDriver driver) {
+    public ElementAction(WebDriver driver) {
         this.driver = driver;
         wait = new WaitUtil(driver);
     }
