@@ -22,6 +22,7 @@ public class ElementAction {
                        WebElement element = driver.findElement(locator);
                        scrollToElement(locator);
                        element.click();
+                       LogsManager.info("Clicked on element: " + locator.toString());
                        return true;
                    } catch (Exception e) {
                           return false;
@@ -38,6 +39,7 @@ public class ElementAction {
                         scrollToElement(locator);
                         element.clear();
                         element.sendKeys(text);
+                        LogsManager.info("Typed text '" + text + "' into element: " + locator);
                         return true;
                     } catch (Exception e) {
                         return false;
@@ -53,6 +55,7 @@ public class ElementAction {
                         WebElement element = driver.findElement(locator);
                         scrollToElement(locator);
                         String text = element.getText();
+                        LogsManager.info("Got text '" + text + "' from element: " + locator);
                         return !text.isEmpty() ? text : null;
                     } catch (Exception e) {
                         return null;
@@ -79,6 +82,7 @@ public class ElementAction {
                         WebElement element = driver.findElement(locator);
                         scrollToElement(locator);
                         element.sendKeys(fileAbsolutePath);
+                        LogsManager.info("Uploaded file: " + fileAbsolutePath + " to element: " + locator);
                         return true;
                     } catch (Exception e) {
                         return false;

@@ -16,11 +16,13 @@ public class BrowserAction {
 
     public String getCurrentUrl() {
        String getURL = driver.getCurrentUrl();
+       LogsManager.info("Current URL: " + getURL);
        return getURL;
     }
 
     public void navigateTo(String url) {
         driver.get(url);
+        LogsManager.info("Navigated to: " + url);
     }
 
     public void refresh() {
