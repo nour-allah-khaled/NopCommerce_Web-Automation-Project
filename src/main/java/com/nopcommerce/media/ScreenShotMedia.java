@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ScreenShotMedia {
-    private static final String SCREENSHOT_PATH = "Test_out/ScreenShots/";
+    public static final String SCREENSHOT_PATH = "Test_out/ScreenShots/";
 
     // create method to take full page screenshot
     public static void takeFullPageScreenshot(WebDriver driver, String screenshotName) {

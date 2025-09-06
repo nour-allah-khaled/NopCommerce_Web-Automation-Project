@@ -1,10 +1,12 @@
 package com.nopcommerce.utils.logs;
 
+import com.nopcommerce.report.AllureConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class LogsManager {
     // Create one shared logger instance
+    public static final String LOGS_PATH = AllureConstants.USER_DIR + "/Test-out/Logs/";
     private static  Logger logger (){
         return  LogManager.getLogger(Thread.currentThread().getStackTrace()[3].getClassName());
     }
