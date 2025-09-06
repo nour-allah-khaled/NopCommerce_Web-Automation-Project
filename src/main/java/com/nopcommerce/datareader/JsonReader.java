@@ -1,6 +1,6 @@
 package com.nopcommerce.datareader;
 import com.jayway.jsonpath.JsonPath;
-import com.nopcommerce.utils.LogsManager;
+import com.nopcommerce.utils.logs.LogsManager;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 

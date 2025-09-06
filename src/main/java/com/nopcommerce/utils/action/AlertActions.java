@@ -1,7 +1,8 @@
-package com.nopcommerce.utils;
+package com.nopcommerce.utils.action;
 
+import com.nopcommerce.utils.logs.LogsManager;
+import com.nopcommerce.utils.WaitUtil;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AlertActions {
     private final WebDriver driver;

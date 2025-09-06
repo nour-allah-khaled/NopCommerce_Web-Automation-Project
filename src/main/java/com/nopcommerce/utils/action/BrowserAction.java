@@ -1,5 +1,6 @@
-package com.nopcommerce.utils;
+package com.nopcommerce.utils.action;
 
+import com.nopcommerce.utils.logs.LogsManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WindowType;
 

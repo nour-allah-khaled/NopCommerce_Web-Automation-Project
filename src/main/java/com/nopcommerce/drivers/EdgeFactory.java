@@ -1,11 +1,15 @@
 package com.nopcommerce.drivers;
 
+import com.nopcommerce.datareader.PropertyReader;
+import com.nopcommerce.utils.logs.LogsManager;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,12 +31,38 @@ public class EdgeFactory extends AbstractDriver {
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-dev-shm-usage");
         options.setAcceptInsecureCerts(true);
+        switch (PropertyReader.getProperty("executionType"))
+        {
+            case "LocalHeadless" -> options.addArguments("--headless=new");
+            case  "Remote" ->
+            {
+                options.addArguments("--disable-gpu");
+                options.addArguments("--disable-extensions");
+                options.addArguments("--headless=new");
+            }
+        }
         options.setPageLoadStrategy(PageLoadStrategy.EAGER);
 
         return options;
     }
     @Override
     public WebDriver create() {
-        return new EdgeDriver(getEdgeOptions());
+        if (PropertyReader.getProperty("executionType").equalsIgnoreCase("Local") ||
+                PropertyReader.getProperty("executionType").equalsIgnoreCase("LocalHeadless")) {
+            return new EdgeDriver(getEdgeOptions());
+        } else if (PropertyReader.getProperty("executionType").equalsIgnoreCase("Remote")) {
+            try {
+                return new RemoteWebDriver(
+                        new URI("http://" + remoteHost + ":" + remotePort + "/wd/hub").toURL(), getEdgeOptions()
+                );
+            } catch (Exception e) {
+                LogsManager.error("Error creating RemoteWebDriver: " + e.getMessage());
+                throw new RuntimeException("Failed to create RemoteWebDriver", e);
+            }
+
+        } else {
+            LogsManager.error("Invalid execution type: " + PropertyReader.getProperty("executionType"));
+            throw new IllegalArgumentException("Invalid execution type: " + PropertyReader.getProperty("executionType"));
+        }
     }
 }

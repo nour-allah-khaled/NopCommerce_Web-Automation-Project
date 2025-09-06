@@ -1,4 +1,4 @@
-package com.nopcommerce.utils;
+package com.nopcommerce.utils.logs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

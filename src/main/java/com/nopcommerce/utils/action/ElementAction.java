@@ -1,5 +1,7 @@
-package com.nopcommerce.utils;
+package com.nopcommerce.utils.action;
 
+import com.nopcommerce.utils.logs.LogsManager;
+import com.nopcommerce.utils.WaitUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

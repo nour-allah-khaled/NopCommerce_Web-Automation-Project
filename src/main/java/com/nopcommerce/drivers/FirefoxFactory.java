@@ -1,9 +1,14 @@
 package com.nopcommerce.drivers;
 
+import com.nopcommerce.datareader.PropertyReader;
+import com.nopcommerce.utils.logs.LogsManager;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.URI;
 
 public class FirefoxFactory extends AbstractDriver {
    private FirefoxOptions getFirefoxOptions() {
@@ -18,11 +23,41 @@ public class FirefoxFactory extends AbstractDriver {
        firefoxOptions.addArguments("--no-sandbox");
        firefoxOptions.addArguments("--remote-allow-origins=*");
        firefoxOptions.addArguments("--disable-dev-shm-usage");
+       switch (PropertyReader.getProperty("executionType"))
+       {
+           case "LocalHeadless" -> firefoxOptions.addArguments("--headless=new");
+           case  "Remote" ->
+           {
+              firefoxOptions.addArguments("--disable-gpu");
+               firefoxOptions.addArguments("--disable-extensions");
+               firefoxOptions.addArguments("--headless=new");
+           }
+       }
        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
        return firefoxOptions;
    }
     @Override
     public WebDriver create() {
-        return new FirefoxDriver(getFirefoxOptions());
+        if (PropertyReader.getProperty("executionType").equalsIgnoreCase("Local") ||
+                PropertyReader.getProperty("executionType").equalsIgnoreCase("LocalHeadless") )
+        {
+            return new FirefoxDriver(getFirefoxOptions());
+        }
+        else if (PropertyReader.getProperty("executionType").equalsIgnoreCase("Remote")) {
+            try {
+                return new RemoteWebDriver(
+                        new URI("http://"+ remoteHost+ ":" +remotePort + "/wd/hub").toURL(), getFirefoxOptions()
+                );
+            }
+            catch (Exception e) {
+                LogsManager.error("Error creating RemoteWebDriver: " + e.getMessage());
+                throw new RuntimeException("Failed to create RemoteWebDriver", e);
+            }
+
+        }
+        else {
+            LogsManager.error("Invalid execution type: " + PropertyReader.getProperty("executionType"));
+            throw new IllegalArgumentException("Invalid execution type: " + PropertyReader.getProperty("executionType"));
+        }
     }
 }

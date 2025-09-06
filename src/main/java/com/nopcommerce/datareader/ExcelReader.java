@@ -1,6 +1,6 @@
 package com.nopcommerce.datareader;
 
-import com.nopcommerce.utils.LogsManager;
+import com.nopcommerce.utils.logs.LogsManager;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
